@@ -16,7 +16,7 @@ const ItemPage_1 = ({
   onSizeSelect
 }) => {
   return (
-    <div className="w-screen min-h-screen h-screen1 text-white min-h-screen bg-gray-50 page pb-7">
+    <div className="w-screen min-h-screen h-screen1 text-white bg-gray-50 page pb-7">
       <ItemImages imgs={data?.images} />
       
       <div className="w-full default_padding">

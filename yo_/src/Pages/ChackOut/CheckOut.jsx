@@ -12,6 +12,7 @@ import img from
 '../.../../../Image/Items/8f1847c9-3855-4dec-af78-e8105b026390_PACH+SHOT+VOLA+CIEL+ET+VISO+(8).jpeg'
 
 import Yo from "../../Part/Utility/Axios";
+import Checkbox from '../../Part/Utility/Checkbox';
 
 
 
@@ -22,7 +23,14 @@ const CheckOut = () => {
     const [selectAddress, setSelectAddress] = useState({
       id:0
     });
-   
+
+    const [payment, setPayment] = useState(['upi',"cod"]);
+    
+    const [paymentSelected, setPaymentSelected] = useState("");
+
+
+
+
    
    
    
@@ -63,7 +71,10 @@ const CheckOut = () => {
   
   
   
-  
+  const handlePaymentOption = (option) => {
+      setPaymentSelected(option);
+    }
+
   
   
   
@@ -129,9 +140,25 @@ const CheckOut = () => {
 
 
 
-      <CheckOutSectionLayout heading="Paiement" subHeading="">
+      <CheckOutSectionLayout heading="Paiement" subHeading="jjjjjjjj">
       <>
-        <h3 className="font-normal text-gray-500"> hai kya ham kisi ko</h3>
+      <div className='jstart gap-2 py-3 flex-row flex'>
+
+            {payment?.map((option,i)=>(
+              
+              
+              <Checkbox 
+              key={i}
+              checked={paymentSelected==option} 
+              label={option} 
+              value={paymentSelected} 
+              onChange={(e) => handlePaymentOption(option) } 
+              //   
+              />
+              
+            ))}
+
+            </div>
         
         </>
       </CheckOutSectionLayout>
