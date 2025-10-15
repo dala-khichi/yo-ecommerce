@@ -1,0 +1,106 @@
+
+import React, {
+  forwardRef,
+  useState,
+  useImperativeHandle,
+  useRef,
+  useMemo,
+} from "react";
+import gsap from "gsap";
+import ManuItems from "./ManuItems";
+import SubMenu from "./SubMenu";
+import {useUtility} from '../../Context/UtilityContext'
+
+
+const Menu = forwardRef(({
+  className
+}, ref) => {
+  const menuRef = useRef(null);
+  const subMenuRef = useRef(null);
+  const  {yoData} = useUtility()
+
+
+  const [isOpenSubMenu, setIsOpenSubMenu] = useState(false);
+
+
+  useImperativeHandle(ref, () => ({
+    openMenu: () => {
+      gsap.to(menuRef.current, {
+        //opacity: 1, 
+        y: 0, 
+        //scale:1,
+       // height: "calc(100vh - 5rem)",
+        display: "flex", 
+        duration: 1, 
+        ease: "power4.inOut"
+      });
+    },
+    closeMenu: () => {
+      gsap.to(menuRef.current, {
+      //  opacity: 0, 
+        display: "none",
+      //  height: "0",
+       y: "100vh",
+       // scale:0,
+        duration: 1,
+        ease: "power4.inOut"
+      });
+    },
+    
+    }));
+
+
+const toggleSubMenu = (id) => {
+      
+    if (isOpenSubMenu) {
+      subMenuRef.current?.openSubMenu(id);
+    } else {
+      subMenuRef.current?.closeSubMenu();
+    }
+    setIsOpenSubMenu(!isOpenSubMenu);
+    
+  };
+
+
+
+const menuItems = useMemo(() => (
+  yoData?.categories?.map((element) => (
+    <ManuItems 
+      key={element?.id} 
+      onClick={() => toggleSubMenu(element.id)} 
+      text={element?.name} 
+      
+
+    />
+  ))
+), [yoData?.categories])
+
+
+
+
+
+
+
+  return (
+    <>
+     
+    <div
+      ref={menuRef} style={{display:"none",}}
+      className={`px-11 bg-white border-t-2 scale-1 fixed z-40  translate-x-[100vw]1 translate-y-[100vh]  bg-white py-14 w-screen h-[calc(100vh-5rem)] flex  flex-col gap-9 ${className}`}
+      >
+      
+      {yoData?.categories?.map((element,index)=>(
+      <ManuItems onClick={()=>toggleSubMenu(element?.id)} text={element?.name} />
+        ))}
+        
+        <menuItems />
+        
+        
+        
+     <SubMenu ref={subMenuRef}  closeButton={()=>toggleSubMenu(0)}  />
+    </div>
+  </>
+);
+});
+
+export default Menu;

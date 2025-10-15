@@ -1,0 +1,324 @@
+import MultiInput from './components/InputsX/MultiInput';
+import Update from './pages/Update';
+import Page_ from './pages/Page';
+import Create from './pages/Create';
+
+const Page = [
+  ///roles
+  [
+    {
+    path: "/roles",
+    pageName: "Rolls",
+    page:  <Page_ 
+    pageName={"Rolls"}  
+    url={"http://localhost:5000/api/roles/"}
+    title={"eCommerce Dashboard | create roles "}
+    felds={ [{inputTypy:"text"}]}
+    
+    
+    /> ,
+
+
+  },
+    {
+    path: "/roles/create",
+    pageName: "Rolls",
+    url: "http://localhost:5000/api/roles/",
+    title: "eCommerce Dashboard | create roles ",
+    felds: [{inputTypy:"text"}],
+    page:  <Create 
+    name="Rolls"
+    url="http://localhost:5000/api/roles/"
+    inputs={[
+      {type:"text",name:"role_name"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+       {type:"multiInputs",name:"item" ,inputs:    
+        [
+      {type:"text",name:"role_name"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ],
+
+       },
+       {type:"multiInputs",name:"item_" ,inputs:    
+        [
+      {type:"text",name:"role_name"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ],
+
+       },
+
+      ]}
+    
+    /> ,
+  },
+    {
+   
+    path: "/roles/update/:id",
+    pageName: "Rolls",
+    url: "http://localhost:5000/api/roles/",
+    title: "eCommerce Dashboard | create roles ",
+    felds: [{inputTypy:"text"}],
+    page:  <Update
+    
+        name="Rolls"
+    url="http://localhost:5000/api/roles/"
+    inputs={[
+      {type:"text",name:"role_name"},
+  //    {type:"file",  name:"role_name"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption/",valueBy:"value",optionBy:"status"},
+      ]}
+    
+    /> ,
+  },
+  ],
+  //categories
+  [
+    {
+    path: "/categories",
+    pageName: "categories",
+    page:  <Page_ 
+    pageName="categories"
+    url={"http://localhost:5000/api/categories/"}
+    title={"eCommerce Dashboard | create categories "}
+    felds={ [{inputTypy:"text"}]}
+    
+    
+    /> ,
+
+
+  },
+    {
+    path: "/categories/create",
+    pageName: "Rolls",
+    title: "eCommerce Dashboard | create categories ",
+    felds: [{inputTypy:"text"}],
+    page:  <Create 
+    name="categories"
+    url="http://localhost:5000/api/categories/"
+    inputs={
+      [
+       {type:"text",name:"name"},
+      {type:"text",name:"slug"},
+      {type:"file",  name:"img", multiple:true},
+      {type:"text",name:"created_by" },
+     {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+    }
+    /> ,
+  },
+    {
+   
+    path: "/categories/update/:id",
+    pageName: "Rolls",
+    url: "http://localhost:5000/api/categories/",
+    title: "eCommerce Dashboard | create categories ",
+    felds: [{inputTypy:"text"}],
+    page:  <Update
+    
+        name="Rolls"
+         url="http://localhost:5000/api/categories/"
+        inputs={
+      [
+       {type:"text",name:"name"},
+      {type:"text",name:"slug"},
+      {type:"file",  name:"img", multiple:true},
+      {type:"text",name:"created_by"},
+     {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+    }
+    
+    /> ,
+  },
+  ],
+  //sub-categories
+  [
+    {
+    path: "/sub-categories",
+    pageName: "sub-categories",
+    page:  <Page_ 
+    pageName="sub-categories"
+    url={"http://localhost:5000/api/sub-categories/"}
+    title={"eCommerce Dashboard | create sub-categories "}
+    felds={ [{inputTypy:"text"}]}
+    
+    
+    /> ,
+
+
+  },
+    {
+    path: "/sub-categories/create",
+    pageName: "Rolls",
+    title: "eCommerce Dashboard | create sub-categories ",
+    felds: [{inputTypy:"text"}],
+    page:  <Create 
+    name="Rolls"
+    url="http://localhost:5000/api/sub-categories/"
+    inputs={
+      [
+        {type:"text",name:"name"},
+      {type:"text",name:"slug"},
+      {type:"file",  name:"img"},
+      {type:"text",name:"created_by"},
+      {type:"option",name:"category_id",url:"http://localhost:5000/api/categories",valueBy:"id",optionBy:"name"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+    }
+    /> ,
+  },
+    {
+   
+    path: "/sub-categories/update/:id",
+    pageName: "Rolls",
+    url: "http://localhost:5000/api/sub-categories/",
+    title: "eCommerce Dashboard | create sub-categories ",
+    felds: [{inputTypy:"text"}],
+    page:  <Update
+    
+        name="Rolls"
+         url="http://localhost:5000/api/sub-categories/"
+        inputs={
+      [
+        {type:"text",name:"name"},
+      {type:"text",name:"slug"},
+      {type:"file",  name:"img"},
+      {type:"text",name:"updated_by"},
+      {type:"option",name:"category_id",url:"http://localhost:5000/api/categories",valueBy:"id",optionBy:"name"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+    }
+    
+    /> ,
+  },
+  ],
+//  size
+  [
+    {
+    path: "/size",
+    pageName: "size",
+    page:  <Page_ 
+    pageName="size"
+    url={"http://localhost:5000/api/sizes/"}
+    title={"eCommerce Dashboard | create size "}
+    felds={ [{inputTypy:"text"}]}
+    
+    
+    /> ,
+
+
+  },
+    {
+    path: "/size/create",
+    pageName: "Rolls",
+    title: "eCommerce Dashboard | create size ",
+    felds: [{inputTypy:"text"}],
+    page:  <Create 
+    name="Rolls"
+    url="http://localhost:5000/api/sizes/"
+    inputs={
+      [
+        {type:"text",name:"size"},
+      {type:"text",name:"created_by"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+    }
+    /> ,
+  },
+    {
+   
+    path: "/size/update/:id",
+    pageName: "Rolls",
+    url: "http://localhost:5000/api/sizes/",
+    title: "eCommerce Dashboard | create size ",
+    felds: [{inputTypy:"text"}],
+    page:  <Update
+    
+        name="Rolls"
+    url="http://localhost:5000/api/colors/"
+    inputs={
+      [
+        {type:"text",name:"size"},
+      {type:"text",name:"created_by"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+      
+    }
+    
+    /> ,
+  },
+  ],
+  
+ // color
+  [
+    {
+    path: "/color",
+    pageName: "color",
+    page:  <Page_ 
+    pageName="color"
+    url={"http://localhost:5000/api/colors/"}
+    title={"eCommerce Dashboard | create color "}
+    felds={ [{inputTypy:"text"}]}
+    
+    
+    /> ,
+
+
+  },
+    {
+    path: "/color/create",
+    pageName: "Rolls",
+    title: "eCommerce Dashboard | create color ",
+    felds: [{inputTypy:"text"}],
+    page:  <Create 
+    name="Rolls"
+    url="http://localhost:5000/api/colors/"
+    inputs={
+      [
+        {type:"text",name:"color"},
+      {type:"text",name:"created_by"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+    }
+    /> ,
+  },
+    {
+   
+    path: "/color/update/:id",
+    pageName: "Rolls",
+    url: "http://localhost:5000/api/colors/",
+    title: "eCommerce Dashboard | create color ",
+    felds: [{inputTypy:"text"}],
+    page:  <Update
+    
+        name="Rolls"
+    url="http://localhost:5000/api/colors/"
+    inputs={
+      [
+        {type:"text",name:"color"},
+      {type:"text",name:"created_by"},
+      {type:"option",name:"status",url:"http://localhost:5000/api/helper/statusOption",valueBy:"value",optionBy:"status"},
+      ]
+      
+      
+    }
+    
+    /> ,
+  },
+  ],
+  
+  
+  
+  
+  
+  ];
+  
+  export {Page}

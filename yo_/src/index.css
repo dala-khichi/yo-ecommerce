@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*utility class */
+
+
+img{
+ @apply w-full h-full object-cover
+}
+
+input{
+ @apply w-full h-full object-cover
+}
+
+.default_padding{
+  @apply px-5
+}
+.centre{
+  @apply flex justify-center items-center
+}
+.jstart {
+  @apply flex justify-start items-center
+}
+.istart {
+  @apply flex justify-center items-start
+}
+
+.jb{
+   @apply flex flex-row justify-between items-center
+}
+
+
+.full {
+  @apply w-full h-full
+  
+}
+
+.page{
+  @apply w-screen min-h-screen relative z-[10]
+  
+}
+
+.move{
+  @apply duration-700
+  
+}
+.dark-bg{
+  /*  dark background: ;*/
+  @apply dark:bg-black dark:text-white
+}
+.dark-bg-l{
+  /*  dark background: ;*/
+  @apply dark:bg-white dark:text-black
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* costume class */
+
+.navSvgboder{
+  @apply border-0  p-4 border-transparent
+  
+  }
+
+
+.mainFooter tr {
+  @apply w-1/2 font-semibold 
+}
+.mainFooter td {
+  @apply w-1/2  h-9 
+}

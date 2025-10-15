@@ -1,0 +1,37 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('./Font/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-style: normal;
+  
+}
+
+
+.ani{
+  animation-name: identifier;
+  animation-duration: 2s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.ani_1{
+  animation-name: identifier1;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@keyframes identifier {
+  from { 
+ opacity: 0;
+   
+   
+  }
+  
+}
+@keyframes identifier1 {
+  from { 
+ opacity: 0.9;
+  }
+  
+}
+
+.tranfom{
+  transition-property:3s;
+}
