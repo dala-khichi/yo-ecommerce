@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const {userAuth} = require('../../middleware/authMiddleware.js');
+
 const {getAll,create,update,getById,getByIdForUpdate,delete:t} = require('../controllers/addressController');
 
 // GET all items with filters
-router.get("/", getAll);
-router.get("/:id", getById);
-router.get("/update/:id", getByIdForUpdate);
-router.post("/", create);
-router.put("/:id", update);
-router.delete("/:id", t);
+router.get("/",userAuth, getAll);
+router.get("/:id",userAuth, getById);
+router.get("/update/:id", userAuth,getByIdForUpdate);
+router.post("/",userAuth, create);
+router.put("/:id",userAuth, update);
+router.delete("/:id",userAuth, t);
 
 
 module.exports = router;
