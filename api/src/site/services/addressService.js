@@ -14,11 +14,11 @@ class AddressService {
     }
 
     static async create(data,userId) {
-        return await Aaddresses.create(data);
+        return await Aaddresses.create(data,userId);
     }
 
     static async update(id, data,userId) {
-        return await Aaddresses.update(id, data);
+        return await Aaddresses.update(id, data,userId);
     }
 
     static async delete(id,userId) {

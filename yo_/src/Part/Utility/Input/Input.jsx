@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Input = ({className,placeholder,onChange,error,label}) => {
+const Input = ({className,placeholder,onChange,error,label,type}) => {
 const [inputValue , setInputValue] = useState("")
 const [inputBorderIsOpen , setInputBorderIsOpen] = useState(true)
   const labelRef = useRef(null);
@@ -117,7 +117,7 @@ const hendleOnChange=(e)=>{
       </label>
        
       <input
-        type="text"
+      type={type||"text"}
         value={inputValue}
         onChange={(e)=>{hendleOnChange(e); onChange(e)}}
         placeholder={placeholder}

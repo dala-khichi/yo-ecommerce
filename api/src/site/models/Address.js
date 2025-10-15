@@ -18,7 +18,7 @@ class Aaddresses {
     }
 
     static async getById(id) {
-        const query = "SELECT * FROM addresses WHERE id = ?";
+        const query = "SELECT * FROM addresses WHERE id = ? ";
         const [results] = await db.execute(query, [id]);
         return results.length ? results[0] : null;
     }
@@ -27,10 +27,13 @@ class Aaddresses {
         return this.getById(id);
     }
 
-    static async create({ address = "", city = "", state = "6", pincode = "7" }) {
-        const query = `INSERT INTO addresses ( address, city, state, pincode) 
-                       VALUES (?, ?, ?, ?)`;
-        const [result] = await db.execute(query, [address, city, state, pincode]);
+    static async create({ full_name ,  phone_number ,  alternate_phone ,  address_line1 ,  address_line2 ,  city ,  state ,  pincode ,  address_type ,  is_default },userId) {
+        const query = `INSERT INTO  addresses ( user_id ,  full_name ,  phone_number ,  alternate_phone ,  address_line1 ,  address_line2 ,  city ,  state ,  pincode ,  address_type ,  is_default , )
+         VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
+         console.log(full_name ,  phone_number ,  alternate_phone ,  address_line1 ,  address_line2 ,  city ,  state ,  pincode )
+
+
+        const [result] = await db.execute(query, [ userId ,  full_name ,  phone_number ,  alternate_phone ,  address_line1 ,  address_line2 ,  city ,  state ,  pincode ,  address_type ,  is_default ,]);
         return result.insertId;
     }
 
