@@ -32,6 +32,7 @@ import AddAddressForm from './Pages/MyAccount/AddAddressForm'
 import TrackOrder from './Pages/MyAccount/TrackOrder'
 import ProtecRoute from './Part/Utility/ProtecRoute'
 import ItemDisplay from './TestComponent/Test2/ProductCard'
+import EditAddressForm from "./Pages/MyAccount/EditAddressForm";
 
 
 
@@ -81,6 +82,7 @@ function App() {
           <Route path="address" element={<MyAddress />} />
           <Route path="order" element={<MyOrder />} />
           <Route path="add-address" element={<AddAddressForm />} />
+          <Route path="edit-address" element={<EditAddressForm />} />
           <Route path="track-order" element={<TrackOrder />} />
 
         </Route>
