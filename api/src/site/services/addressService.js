@@ -14,6 +14,7 @@ class AddressService {
     }
 
     static async create(data,userId) {
+        console.log(data,userId)
         return await Aaddresses.create(data,userId);
     }
 

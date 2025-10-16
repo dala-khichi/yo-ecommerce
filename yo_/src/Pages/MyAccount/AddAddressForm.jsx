@@ -74,7 +74,7 @@ const handleColorChange = (color) => {
 
 
 
-<input    type='ch'      />
+
 
         
       
