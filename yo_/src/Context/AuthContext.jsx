@@ -1,76 +1,79 @@
-import { createContext, useContext, useState,useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import Yo from "../Part/Utility/Axios"
+import { createContext, useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Yo from "../Part/Utility/Axios";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
- const go = useNavigate();
-
-  
-  
+  const go = useNavigate();
+  const [loading, setLoading] = useState(true); // 👈 added
   const [user, setUser] = useState({
-    isLogin:false,
-    name:"",
-    phone:"",
-    email:"",
-    id:null,
-    
-  }); // or use token instead
+    isLogin: false,
+    name: "",
+    phone: "",
+    email: "",
+    id: null,
+  });
 
-const isLogin= async()=>{
-  try {
-  const res =  await Yo.get("/api/user-auth/is-login")
-   const {name,phone,email,id }= res.data
-   
-    setUser({...user,
-    isLogin:true,
-    name:name,
-    phone:phone,
-    email:email,
-    id:id,
-    });
-  } catch (error) {
-   console.log("not login");
-  }
-}
+  const isLogin = async () => {
+    try {
+      const res = await Yo.get("/api/user-auth/is-login");
+      const { name, phone, email, id } = res.data;
 
- useEffect(() => { 
-  isLogin()
+      setUser({
+        isLogin: true,
+        name,
+        phone,
+        email,
+        id,
+      });
+    } catch (error) {
+      console.log("Not logged in");
+      setUser({
+        isLogin: false,
+        name: "",
+        phone: "",
+        email: "",
+        id: null,
+      });
+    } finally {
+      setLoading(false); // 👈 important
+    }
+  };
+
+  useEffect(() => {
+    isLogin();
   }, []);
-
-
-
 
   const login = async (userData) => {
     try {
-      
-   const res =  await Yo.post("/api/user-auth/login" ,
-   //{phoneOrEmail:"1234567891",password:"10"}
-   userData
-   )
-   const {name,phone,email,id }= res.data
-    setUser({...user,
-    isLogin:true,
-    name:name,
-    phone:phone,
-    email:email,
-    id:id,
-      
-    });
-    go('/')
+      const res = await Yo.post("/api/user-auth/login", userData);
+      const { name, phone, email, id } = res.data;
+      setUser({
+        isLogin: true,
+        name,
+        phone,
+        email,
+        id,
+      });
+      go("/");
     } catch (error) {
       console.error(error);
     }
   };
 
   const logout = () => {
-    setUser(null);
-    // remove token from storage if used
+    setUser({
+      isLogin: false,
+      name: "",
+      phone: "",
+      email: "",
+      id: null,
+    });
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
