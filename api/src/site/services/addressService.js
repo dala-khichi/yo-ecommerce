@@ -14,11 +14,12 @@ class AddressService {
     }
 
     static async create(data,userId) {
-        console.log(data,userId)
+        
         return await Aaddresses.create(data,userId);
     }
 
     static async update(id, data,userId) {
+      console.log(data);
         return await Aaddresses.update(id, data,userId);
     }
 

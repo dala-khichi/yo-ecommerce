@@ -82,7 +82,7 @@ function App() {
           <Route path="address" element={<MyAddress />} />
           <Route path="order" element={<MyOrder />} />
           <Route path="add-address" element={<AddAddressForm />} />
-          <Route path="edit-address" element={<EditAddressForm />} />
+          <Route path="edit-address/:id" element={<EditAddressForm />} />
           <Route path="track-order" element={<TrackOrder />} />
 
         </Route>

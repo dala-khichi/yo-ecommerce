@@ -43,12 +43,14 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
+      
     try {
         const updated = await AddressService.update(req.params.id, req.body, req?.user?.id);
         if (!updated) return errorResponse(res, "Shipping detail not found or not updated", 404);
         return successResponse(res, "Shipping detail updated successfully");
     } catch (error) {
         return errorResponse(res, error.message);
+        
     }
 };
 
