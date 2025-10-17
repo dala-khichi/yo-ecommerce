@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Input = ({className,placeholder,onChange,error,label,type}) => {
+const Input = ({className,placeholder,onChange,error,label,type,value}) => {
 const [inputValue , setInputValue] = useState("")
 const [inputBorderIsOpen , setInputBorderIsOpen] = useState(true)
   const labelRef = useRef(null);
@@ -78,7 +78,7 @@ const hendleOnChange=(e)=>{
   
   useEffect(() => {
     setInputBorderIsOpen(true)
-    if(inputValue){
+    if(inputValue || error){
      if(inputBorderIsOpen){
       }else{
         setInputBorderIsOpen(true)
@@ -91,8 +91,14 @@ const hendleOnChange=(e)=>{
     
     
     
-  }, [inputValue,setInputValue]);
+  }, [inputValue,setInputValue,error]);
 
+useEffect(() => {
+    
+
+    
+    setInputValue(value)
+  }, [value]);
 
 
 
@@ -113,7 +119,7 @@ const hendleOnChange=(e)=>{
         
         className="block font-medium opacity-0 pointer-events-none bg-transparent translate-y-7 text-sm mb-1"
       >
-        {label}<span className="text-red-500">*</span>  {error && <span className=" text-red-500 mr-1 font-light text-xs">{error}</span>}
+        {label}<span className="text-red-500">*</span>  {error && <h2 className=" text-red-500 mr-1 font-light leading-tight text-xs">{error}</h2>}
       </label>
        
       <input

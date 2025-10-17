@@ -9,7 +9,7 @@ const ProfileInfo = () => {
   ];
 
   return (
-    <div className="max-w-full lg:w-1/2   mx-auto mt-0 p-6 bg-white rounded-2xl shadow-md dark-bg">
+    <div className="max-w-full lg:w-1/2   mx-auto mt-0 p-6 bg-white border dark-bg">
       {data.map((item, index) => (
         <div key={index} className="mb-6">
           <div className="text-sm text-gray-500 uppercase">{item.label}</div>
