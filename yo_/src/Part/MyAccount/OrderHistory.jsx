@@ -49,7 +49,7 @@ const OrderHistory = () => {
 
       {/* Orders */}
       {orders.map((order) => (
-        <div key={order.id} className="border rounded-md p-4 mb-4 shadow-sm">
+        <div key={order.id} className="border  p-4 mb-4 ">
           <p className="text-sm text-gray-500">
             Order {order.id}
             <span className="ml-2 text-gray-400">{order.date}</span>

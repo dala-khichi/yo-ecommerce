@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import Yo from '../../Part/Utility/Axios'
 import MyAccountButton from '../../Part/MyAccount/MyAccountButton'
 import Checkbox from '../../Part/Utility/Checkbox';
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
+
 
 const EditAddressForm = () => {
 
   const { id } = useParams();
+  const go = useNavigate();
 
   const [data, setData] = useState({
     full_name: "",
@@ -54,6 +56,7 @@ if (!data.alternate_phone.trim()) newErrors.alternate_phone = "Phone number is r
       const res = await Yo.put("/api/site/address/" + id, data);
       console.log(res);
       alert("Address updated successfully!");
+      go("/account/address")
     } catch (error) {
       console.error(error);
       alert("Failed to update address");

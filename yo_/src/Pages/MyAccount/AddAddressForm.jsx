@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import Yo from '../../Part/Utility/Axios'
 import MyAccountButton from '../../Part/MyAccount/MyAccountButton'
 import Checkbox from '../../Part/Utility/Checkbox';
+import { useNavigate } from 'react-router-dom';
 
 const AddAddressForm = () => {
+
+const go = useNavigate();
 
   const [data, setData] = useState({
     full_name: "",
@@ -54,6 +57,8 @@ if (!data.alternate_phone.trim()) newErrors.alternate_phone = "Phone number is r
       const res = await Yo.post("/api/site/address", data);
       console.log(res);
       alert("Address added successfully!");
+      go("/account/address")
+      
       setData({
         full_name: "",
         phone_number: "",

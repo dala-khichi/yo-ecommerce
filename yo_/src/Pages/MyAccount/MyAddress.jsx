@@ -56,9 +56,9 @@ const MyAddress = () => {
 </h2>
 
     {data?.map((e,i)=>(
-      <div className="border-2 border-gray-950 rounded-md">
+      
       <DefaultAddressCard key={i} delectOnClick={() => delectAddress(e.id)} id={e.id} address_type={e.address_type} phone={e.phone_number||"66"} address={e.address_line1 || "add"} pincode={e.pincode || "123029"} city={e.city||"jhook"} state={e.state||"hariyana"} />
-      </div>
+
       ))}
 
     </div>
