@@ -88,7 +88,7 @@ if (!data.alternate_phone.trim()) newErrors.alternate_phone = "Phone number is r
   };
 
   return (
-    <div className="max-w-md ani mx-auto p-6 border rounded-md shadow-sm bg-white dark-bg">
+    <div className="max-w-md ani mx-auto p-6 border  bg-white dark-bg">
       <h2 className="text-lg font-bold mb-4">ADD AN ADDRESS</h2>
 
       <form className="space-y-4 text-xl">

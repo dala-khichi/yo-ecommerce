@@ -4,6 +4,7 @@ import CheckOutInput from '../../Part/CheckOut/CheckOutInput'
 import CheckOutItemCard from '../../Part/CheckOut/CheckOutItemCard'
 import CheckOutSectionLayout from '../../Layout/CheckOutSectionLayout'
 import AddAddressForm from '../../Pages/MyAccount/AddAddressForm'
+import MyAddress from '../../Pages/MyAccount/MyAddress'
 import DefaultAddressCard from '../../Part/MyAccount/DefaultAddressCard'
 
 
@@ -18,7 +19,7 @@ import Checkbox from '../../Part/Utility/Checkbox';
 
 const CheckOut = () => {
     const [checkOutDarta, setCheckOutDarta] = useState({});
-    const [address, setAddress] = useState(true);
+    const [address, setAddress] = useState(false);
     const [coupen, setCoupen] = useState(null);
     const [selectAddress, setSelectAddress] = useState({
       id:0
@@ -116,7 +117,7 @@ const CheckOut = () => {
 
       <CheckOutSectionLayout heading="Livraison" subHeading="">
       {
-        address?      <DefaultAddressCard />:      <AddAddressForm />
+        address?      <DefaultAddressCard />:      <MyAddress  />
         
       }
 
@@ -132,7 +133,7 @@ const CheckOut = () => {
       </CheckOutSectionLayout>
       <CheckOutSectionLayout heading="Livraison" subHeading="">
 
-        <div className="w-full mt-2 font-normal text-gray-500 centre text-sm  py-4 rounded-lg px-3 bg-gray-200 ">
+        <div className="w-full mt-2 font-normal text-gray-500 centre text-sm  py-4 border  px-3 bg-gray-200 ">
           <h3>Saisissez votre adresse d’expédition pour voir les modes d’expédition disponibles.</h3>
         </div>
 
