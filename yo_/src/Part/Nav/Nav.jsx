@@ -38,6 +38,7 @@ const Nav = forwardRef(({
   const menuButtonRef = useRef(null);
   const menuButtonSvgRef = useRef(null);
   const navBgRef = useRef(null);
+  const navBg2Ref = useRef(null);
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenNavManuBtn, setIsOpenNavManuBtn] = useState(false);
   const [isOpenNavCardBtn, setIsOpenNavCardBtn] = useState(false);
@@ -165,9 +166,9 @@ const triggerCard = ()=>{
 }
 const triggerMenu= ()=>{
   
-              navBg.trigger()
+         navBg.trigger()
         navManuBtn.trigger()
-          menuX.trigger();
+       menuX.trigger();
             
 }
 
@@ -367,14 +368,14 @@ const animateToHamburger = () => {
       ease: "power4.inOut",
     },"nav")
     
-      tl.to(navBgRef.current, {
+      tl.to(navBg2Ref.current, {
       height: "5rem",
       duration: 2,
         ease: "power4.inOut"
     },"nav")
   
     
-  }, [isOpenNavBg,setIsOpenNavBg]);
+  }, []);
  
   
 
@@ -383,7 +384,8 @@ const animateToHamburger = () => {
       <div className="flex relative max-h-20 h-20  w-screen font-[Inter] items-center
        default_padding flex-row justify-between">
         
-      <div ref={navBgRef} className=" navBg bg-white3 bg-[hsla(255%,100%,0.348)] backdrop-blur-lg h-0 w-screen  -z-[10] absolute top-0 left-0 "></div>
+      <div ref={navBgRef} className=" navBg bg-white bg-[hsla(255%,10%,0.98)]2 backdrop-blur-lg h-0 w-screen  -z-[10] absolute top-0 left-0 "></div>
+      <div ref={navBg2Ref} className=" navBg bg-white bg-[hsla(255%,10%,0.98)]2 backdrop-blur-lg h-0 w-screen  -z-[10] absolute top-0 left-0 "></div>
       
         <Link to="/" className="break-words  font-extrabold text-3xl
         tracking-[0.5rem]">UBAC {user.name &&<span className="text-sm tracking-normal whitespace-nowrap line-clamp-none absolute  bottom-2 font-light">login by {user.name}</span>}</Link>
