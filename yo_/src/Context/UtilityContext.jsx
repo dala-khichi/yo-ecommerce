@@ -10,7 +10,10 @@ export const UtilityProvider = ({ children }) => {
     height: null,
   });
   const [categoryData, setCategoryData] = useState([]);
+ const [selectedAddressId, setSelectedAddressId] = useState(0);
+
   const [subCategoryData, setSubCategoryData] = useState([]);
+  
   const [yoData, setYoData] = useState({});
   const [navConf, setNavConf] = useState({
     position: 'fixed',
@@ -43,6 +46,19 @@ export const UtilityProvider = ({ children }) => {
         alert("getYoData")
       }
     }
+    
+    
+    
+    
+    
+    
+    useEffect(()=>{
+
+   setSelectedAddressId(localStorage.getItem("selectedAddressId") || 0)
+  },[])
+    
+    
+    
     
     
     
@@ -86,7 +102,8 @@ export const UtilityProvider = ({ children }) => {
     getYoData,
     navConf, 
     setNavConf,
-      
+      selectedAddressId,
+      setSelectedAddressId
     }}>
       {children}
     </UtilityContext.Provider>

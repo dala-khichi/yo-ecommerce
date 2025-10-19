@@ -2,6 +2,7 @@ import React, { useEffect,useState } from 'react';
 import Yo from '../../Part/Utility/Axios'
 import DefaultAddressCard from '../../Part/MyAccount/DefaultAddressCard'
 import Checkbox from '../../Part/Utility/Checkbox'
+import { useUtility } from "../../Context/UtilityContext";
 
 import {
   Link,
@@ -13,8 +14,10 @@ const MyAddress = () => {
   const [data , setData] = useState([])
   const [selectedAddress , setSelectedAddress] = useState(0)
   
+      const { selectedAddressId, setSelectedAddressId } = useUtility();
+
   
-  const addAddress = async()=>{
+  const getAddress = async()=>{
    try {
    const res = await Yo.get("/api/site/address");
   setData(res.data || []);
@@ -31,9 +34,26 @@ const MyAddress = () => {
    }
   }
   useEffect(()=>{
-    addAddress()
+    getAddress()
     
   },[])
+  
+  
+  
+  
+  
+  
+  
+  const setAddress=(id)=>{
+    
+    setSelectedAddressId(id || 0)
+    const selectedId= JSON.stringify(id||0);
+     localStorage.setItem("selectedAddressId",selectedId);
+  }
+  
+  
+  
+  
   
   
   
@@ -55,14 +75,14 @@ const MyAddress = () => {
   
                           
                             <input 
-                                 value={selectedAddress}
-                                checked={selectedAddress==e.id}
-                               onChange={()=>setSelectedAddress(e.id)}
+                                 value={selectedAddressId}
+                                checked={selectedAddressId==e.id}
+                               onChange={()=>setAddress(e.id)}
                                  type="checkbox" 
                                 className="absolute  opacity-1 pointer-events-auto  z-0 w-full h-full bg-amber-400 peer  " 
                             />
                             
-      <DefaultAddressCard className={selectedAddress==e.id?'bg-gray-100':'bg-white' } key={i} delectOnClick={() => delectAddress(e.id)} id={e.id} address_type={e.address_type} phone={e.phone_number||"66"} address={e.address_line1 || "add"} pincode={e.pincode || "123029"} city={e.city||"jhook"} state={e.state||"hariyana"} />
+      <DefaultAddressCard className={selectedAddressId==e.id?'bg-gray-100':'bg-white' } key={i} delectOnClick={() => delectAddress(e.id)} id={e.id} address_type={e.address_type} phone={e.phone_number||"66"} address={e.address_line1 || "add"} pincode={e.pincode || "123029"} city={e.city||"jhook"} state={e.state||"hariyana"} />
       
       
 

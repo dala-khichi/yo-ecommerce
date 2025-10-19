@@ -11,7 +11,7 @@ import AddAddressForm from '../../Pages/MyAccount/AddAddressForm'
 import MyAddress from '../../Pages/MyAccount/MyAddress'
 import DefaultAddressCard from '../../Part/MyAccount/DefaultAddressCard'
 
-
+import { useUtility } from "../../Context/UtilityContext";
 
 import img from
 '../.../../../Image/Items/8f1847c9-3855-4dec-af78-e8105b026390_PACH+SHOT+VOLA+CIEL+ET+VISO+(8).jpeg'
@@ -25,9 +25,10 @@ const CheckOut = () => {
     const [checkOutDarta, setCheckOutDarta] = useState({});
     const [address, setAddress] = useState(false);
     const [coupen, setCoupen] = useState(null);
-    const [selectAddress, setSelectAddress] = useState({
-      id:0
-    });
+    const [selectAddress, setSelectAddress] = useState({});
+    
+    
+    const { selectedAddressId, setSelectedAddressId } = useUtility();
 
     const [payment, setPayment] = useState(['upi',"cod"]);
     
@@ -39,17 +40,12 @@ const CheckOut = () => {
    
    
    
-   useEffect(()=>{
-    const x=   JSON.stringify(selectAddress);
-     localStorage.setItem("selectedAddressId",x);
-     
-   })
-   
-   
-   
-   
-   
   
+   
+   
+   
+   
+   
   const createOrder = async ()=>{
     try {
     const res = await Yo.post("/api/site/orders")
@@ -60,6 +56,31 @@ const CheckOut = () => {
     
     
   }
+  
+  
+  
+  
+  useEffect(()=>{
+  const getAddressById = async (id)=>{
+    try {
+    const res = await Yo.get("/api/site/address/"+id)
+    
+    setSelectAddress(res?.data||{})
+      
+    } catch (error) {
+      console.error(error);
+    }
+    
+    
+  }
+  
+    getAddressById(selectedAddressId)
+    
+  },[selectedAddressId])
+  
+  
+  
+  
   
   const applyCoupen = async ()=>{
     try {
@@ -126,7 +147,7 @@ const CheckOut = () => {
      
       
     <CheckOutSectionLayout heading="Livraison" subHeading="add Address">
-{address?  <DefaultAddressCard />:
+{selectedAddressId?  <DefaultAddressCard   id={selectAddress.id} address_type={selectAddress.address_type} phone={selectAddress.phone_number||"66"} address={selectAddress.address_line1 || "add"} pincode={selectAddress.pincode || "123029"} city={selectAddress.city||"jhook"} state={selectAddress.state||"hariyana"} /> :
 
 <Link to="/account/add-address">
 <div className="border w-full  bg-gray-200 px-3 py-3 mt-2 ">
