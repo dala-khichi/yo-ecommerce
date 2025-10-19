@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import Yo from '../../Part/Utility/Axios'
 import DefaultAddressCard from '../../Part/MyAccount/DefaultAddressCard'
+import Checkbox from '../../Part/Utility/Checkbox'
 
 import {
   Link,
@@ -14,18 +15,12 @@ const MyAddress = () => {
   
   
   const addAddress = async()=>{
-    
    try {
    const res = await Yo.get("/api/site/address");
-   
   setData(res.data || []);
-     
    } catch (error) {
      console.error(error);
    }
-    
-    
-    
   }
   const delectAddress = async(id)=>{
    try {
@@ -56,8 +51,27 @@ const MyAddress = () => {
 </h2>
 
     {data?.map((e,i)=>(
+  <div className="relative  pointer-events-none" >
+  
+                          
+                            <input 
+                                 value={selectedAddress}
+                                checked={selectedAddress==e.id}
+                               onChange={()=>setSelectedAddress(e.id)}
+                                 type="checkbox" 
+                                className="absolute  opacity-1 pointer-events-auto  z-0 w-full h-full bg-amber-400 peer  " 
+                            />
+                            
+      <DefaultAddressCard className={selectedAddress==e.id?'bg-gray-100':'bg-white' } key={i} delectOnClick={() => delectAddress(e.id)} id={e.id} address_type={e.address_type} phone={e.phone_number||"66"} address={e.address_line1 || "add"} pincode={e.pincode || "123029"} city={e.city||"jhook"} state={e.state||"hariyana"} />
       
-      <DefaultAddressCard key={i} delectOnClick={() => delectAddress(e.id)} id={e.id} address_type={e.address_type} phone={e.phone_number||"66"} address={e.address_line1 || "add"} pincode={e.pincode || "123029"} city={e.city||"jhook"} state={e.state||"hariyana"} />
+      
+
+      
+      
+      
+      
+      
+</div>
 
       ))}
 

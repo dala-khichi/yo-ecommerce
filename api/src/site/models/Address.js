@@ -43,7 +43,7 @@ class Aaddresses {
         address_type, is_default
     ]);
 
-console.log(result)
+
     return result.insertId;
 }
 
