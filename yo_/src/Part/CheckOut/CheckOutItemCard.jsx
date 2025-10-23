@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { load } from "@cashfreepayments/cashfree-js";
+import { useUtility } from "../../Context/UtilityContext";
 
 import img from
 '../../Image/Items/8f1847c9-3855-4dec-af78-e8105b026390_PACH+SHOT+VOLA+CIEL+ET+VISO+(8).jpeg'
 import Yo from "../../Part/Utility/Axios";
-const CheckOutItemCard = () => {
+const CheckOutItemCard = ({paymentType}) => {
   const [items, setItems] = useState([]);
  const [coupen, setCoupen] = useState("");
  const [loding, setLoding] = useState(false);
+// const [paymentSelected, setPaymentSelected] = useState(false);
  const [err, setErr] = useState("");
- 
- 
+  const { selectedAddressId } = useUtility();
+
  
  
  
@@ -32,6 +34,13 @@ const CheckOutItemCard = () => {
      
    
        try {
+         
+         console.log(selectedAddressId,paymentType)
+         
+         
+         
+         
+         
     const res =  await Yo.get("/api/site/payments");
     console.log(res.data)
     sessionId=res.data.payment_session_id;
@@ -64,6 +73,27 @@ const CheckOutItemCard = () => {
             }
         });
     };
+    
+    
+    
+    const doPayment2 = async ()=>{
+      try {
+        const res = await Yo.post("/api/site/orders/create",{selectedAddressId,paymentType});
+        
+        
+        
+        
+        
+        
+      } catch (error) {
+        console.error(error);
+      }
+      
+      
+      
+      
+      
+    }
   
  
  

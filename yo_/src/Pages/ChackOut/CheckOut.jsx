@@ -195,7 +195,7 @@ const CheckOut = () => {
       
       
       <CheckOutSectionLayout heading="Résumé de la commande" subHeading="">
-        <CheckOutItemCard />
+        <CheckOutItemCard paymentType={paymentSelected} />
   </CheckOutSectionLayout>
 
 
