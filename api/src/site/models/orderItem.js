@@ -2,8 +2,8 @@ const db = require('../../config/db');
 
 const OrderItem = {
   create: (data) => {
-    const sql = `INSERT INTO order_items (order_id, item_variant_id, quantity, price) VALUES (?, ?, ?, ?)`;
-    return db.query(sql, [data.order_id, data.item_variant_id, data.quantity, data.price]);
+    const sql = `INSERT INTO order_items (order_id, item_variant_id,item_variant_details	, quantity, price) VALUES (?, ?, ?,?, ?)`;
+    return db.query(sql, [data.order_id, data.item_variant_id,item_variant_details	, data.quantity, data.price]);
   },
 
   findAll: () => {
@@ -17,8 +17,8 @@ const OrderItem = {
   },
 
   update: (id, data) => {
-    const sql = `UPDATE order_items SET order_id = ?, item_variant_id = ?, quantity = ?, price = ? WHERE id = ?`;
-    return db.query(sql, [data.order_id, data.item_variant_id, data.quantity, data.price, id]);
+    const sql = `UPDATE order_items SET order_id = ?, item_variant_id = ?,item_variant_details = ?, quantity = ?, price = ? WHERE id = ?`;
+    return db.query(sql, [data.order_id, data.item_variant_id,item_variant_details, data.quantity, data.price, id]);
   },
 
   delete: (id) => {

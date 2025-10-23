@@ -76,25 +76,7 @@ const CheckOutItemCard = ({paymentType}) => {
     
     
     
-    const doPayment2 = async ()=>{
-      try {
-        const res = await Yo.post("/api/site/orders/create",{selectedAddressId,paymentType});
-        
-        
-        
-        
-        
-        
-      } catch (error) {
-        console.error(error);
-      }
-      
-      
-      
-      
-      
-    }
-  
+   
  
  
  
@@ -158,9 +140,10 @@ function getPercentageOf(discoun, total) {
     
     const payment = async ()=>{
       try {
-    await  doPayment()
+     await  doPayment()
         const res = await Yo.post("/api/site/orders",{
           couponCode:coupenData?.code,
+            selectedAddressId,paymentType
         })
       } catch (error) {
         //console.error(error);

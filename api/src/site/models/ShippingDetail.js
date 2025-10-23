@@ -23,18 +23,91 @@ class ShippingDetails {
     static async getByIdForUpdate(id) {
         return this.getById(id);
     }
+    
 
-    static async create({ order_id, address, city, state, pincode, tracking_no, estimated_delivery_date }) {
-        const query = `INSERT INTO shipping_details (order_id, address, city, state, pincode, tracking_no, estimated_delivery_date) 
-                       VALUES (?, ?, ?, ?, ?, ?, ?)`;
-        const [result] = await db.execute(query, [order_id, address, city, state, pincode, tracking_no, estimated_delivery_date]);
+    static async create({   order_id,
+  full_name,
+  phone_number,
+  alternare_phone,
+  address_line1,
+  address_line2,
+  city,
+  pincode,
+  address_type,
+  tracking_no,
+  estimated_delivery_date, }) {
+        const query = `INSERT INTO shipping_details (
+  order_id,
+  full_name,
+  phone_number,
+  alternare_phone,
+  address_line1,
+  address_line2,
+  city,
+  pincode,
+  address_type,
+  tracking_no,
+  estimated_delivery_date,
+ 
+) VALUES (
+  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+);
+`;
+const [result] = await db.execute(query, [
+  order_id,
+  full_name,
+  phone_number,
+  alternare_phone,
+  address_line1,
+  address_line2,
+  city,
+  pincode,
+  address_type,
+  tracking_no,
+  estimated_delivery_date
+]);
         return result.insertId;
     }
 
-    static async update(id, { order_id, address, city, state, pincode, tracking_no, estimated_delivery_date }) {
-        const query = `UPDATE shipping_details SET order_id = ?, address = ?, city = ?, state = ?, pincode = ?, 
-                       tracking_no = ?, estimated_delivery_date = ? WHERE id = ?`;
-        const [result] = await db.execute(query, [order_id, address, city, state, pincode, tracking_no, estimated_delivery_date, id]);
+    static async update(id, { 
+         order_id,
+    full_name,
+    phone_number,
+    alternare_phone,
+    address_line1,
+    address_line2,
+    city,
+    pincode,
+    address_type,
+    tracking_no,
+    estimated_delivery_date}) {
+        const query = `UPDATE shipping_details
+      SET 
+        order_id = ?,
+        full_name = ?,
+        phone_number = ?,
+        alternare_phone = ?,
+        address_line1 = ?,
+        address_line2 = ?,
+        city = ?,
+        pincode = ?,
+        address_type = ?,
+        tracking_no = ?,
+        estimated_delivery_date = ?
+      WHERE id = ?`;
+        const [result] = await db.execute(query, [
+             order_id,
+      full_name,
+      phone_number,
+      alternare_phone,
+      address_line1,
+      address_line2,
+      city,
+      pincode,
+      address_type,
+      tracking_no,
+      estimated_delivery_date,
+      id,]);
         return result.affectedRows;
     }
 

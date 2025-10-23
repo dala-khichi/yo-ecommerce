@@ -10,17 +10,17 @@ class Payment {
 
     
 
-    static async create({ order_id, order_amount, order_currency, payment_status }) {
-        const query = `INSERT INTO payments (order_id, order_amount, order_currency, payment_status) 
-                       VALUES (?, ?, ?, ?)`;
-        const [result] = await db.execute(query, [order_id, order_amount, order_currency, payment_status]);
+    static async create({ order_id, order_amount, order_currency, payment_status,payment_gateway_order_id ,mata_data}) {
+        const query = `INSERT INTO payments (order_id, order_amount, order_currency,mata_data,payment_gateway_order_id,  payment_status) 
+                       VALUES (?, ?, ?, ?,?,?)`;
+        const [result] = await db.execute(query, [order_id, order_amount, order_currency,mata_data,payment_gateway_order_id, payment_status]);
         return result.insertId;
     }
 
-    static async update(id, { order_id, order_amount, order_currency, payment_status }) {
-        const query = `UPDATE payments SET order_id = ?, order_amount = ?, order_currency = ?, payment_status = ? 
+    static async update(id, { order_id, order_amount, order_currency, payment_status ,payment_gateway_order_id}) {
+        const query = `UPDATE payments SET order_id = ?, order_amount = ?,mata_data=? order_currency = ?, payment_status = ? payment_gateway_order_id = ? 
                        WHERE id = ?`;
-        const [result] = await db.execute(query, [order_id, order_amount, order_currency, payment_status, id]);
+        const [result] = await db.execute(query, [order_id, order_amount,mata_data, order_currency, payment_status,payment_gateway_order_id, id]);
         return result.affectedRows;
     }
     
@@ -37,7 +37,8 @@ class Payment {
         return result.affectedRows;
     }
     
-    static async createOrder() {
+    
+ static async createOrder() {
 
 const cashfree = new Cashfree(CFEnvironment.SANDBOX, config?.clientId, config.secretKey);
 
@@ -53,7 +54,7 @@ var request = {
     },
     "order_meta": {
         "return_url": "https://www.cashfree.com/devstudio/preview/pg/web/popupCheckout?order_id={order_id}",
-        "notify_url": "https://www.cashfree.com/devstudio/preview/pg/webhooks/21617291",
+        "notify_url": "https://www.cashfree.com/devstudio/preview/pg/webhooks/411532",
         "payment_methods": "cc,dc,upi"
     },
     "cart_details": {
@@ -70,16 +71,18 @@ var request = {
             }
         ]
     },
-    "order_expiry_time": `${expiryDate(1).toISOString()}`,
-    "order_note": "Sample Order Note",
+    "order_expiry_time": "2025-10-24T17:12:23.277Z",
+   "order_expiry_time": `${expiryDate(1).toISOString()}`,
     "order_tags": {
         "name": "Developer",
         "company": "Cashfree"
     }
 };
 
+
+
 return await cashfree.PGCreateOrder(request).then((response) => {
-   return {payment_session_id:response?.data.payment_session_id}
+   return response?.data
     
 }).catch((error) => {
     throw new Error(error?.response?.data?.message||"unsptid error");
@@ -87,7 +90,100 @@ return await cashfree.PGCreateOrder(request).then((response) => {
  
     }
     
+
+
+
+       static async createOrderv1({
+        amount = 1.0,
+        currency = "INR",
+        customer,
+        cartItems,
+        returnUrl,
+        notifyUrl,
+        expiryDays = 1,
+        tags = {}
+    }) {
+        if (!customer || !cartItems || cartItems.length === 0) {
+            throw new Error("Customer details and cart items are required");
+        }
+
+        const cashfree = new Cashfree(CFEnvironment.SANDBOX, config?.clientId, config.secretKey);
+
+        const request = {
+            order_amount: amount,
+            order_currency: currency,
+            order_id: `${randomString() + randomString()}`,
+            customer_details: {
+                customer_id: customer.id,
+                customer_name: customer.name,
+                customer_email: customer.email,
+                customer_phone: customer.phone
+            },
+            order_meta: {
+                return_url: returnUrl,
+                notify_url: notifyUrl,
+                payment_methods: "cc,dc,upi"
+            },
+            cart_details: {
+                cart_items: cartItems.map(item => ({
+                    item_id: item.item_id,
+                    item_name: item.item_name,
+                    item_description: item.item_desc,
+                    item_image_url: item.image_url,
+                    item_original_unit_price: item.item_price,
+                    item_discounted_unit_price: item.item_price,
+                    item_quantity: item.quantity,
+                    item_currency: currency
+                }))
+            },
+            order_expiry_time: expiryDate(expiryDays).toISOString(),
+            order_tags: tags
+        };
+
+        return await cashfree.PGCreateOrder(request)
+            .then(response => ({ payment_session_id: response?.data.payment_session_id }))
+            .catch(error => {
+                throw new Error(error?.response?.data?.message || "Unexpected error");
+            });
+    }
+
+
+
+
+
+
+       static async webhook(){
+  const { order_id, payment_status } = req.body.data;
+  if (payment_status === "SUCCESS") {
+    await Payment.updateByGateway(order_id, "SUCCESS");
+    await Order.updateStatusByOrderId(order_id, "CONFIRMED");
+    await Cart.clearUserCart(user_id);
+  } else {
+    await Payment.updateByGateway(order_id, "FAILED");
+  }
+ 
+       }
+
+
+
+
+
+
+
+
+
+
     
 }
 
 module.exports = Payment;
+
+
+
+ 
+
+
+
+
+
+

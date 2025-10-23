@@ -4,7 +4,7 @@ const { successResponse, errorResponse } = require("../../utils/response");
 exports.getAll = async (req, res) => {
     try {
         const cartItems = await CartService.getAll(req.query,req?.user?.id);
-        console.log(cartItems);
+       
         return successResponse(res,cartItems, "Cart items fetched successfully");
     } catch (error) {
         return errorResponse(res, error.message);
