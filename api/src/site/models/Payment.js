@@ -1,7 +1,7 @@
 const db = require("../../config/db");
 const config = require('../../config/env');
 const { Cashfree, CFEnvironment } = require("cashfree-pg");
-const {randomString} = require("../../utils/randomString");
+const {randomString,expiryDate} = require("../../utils/randomString");
 
 
 class Payment {
@@ -70,7 +70,7 @@ var request = {
             }
         ]
     },
-    "order_expiry_time": "2025-10-21T04:45:48.178Z",
+    "order_expiry_time": `${expiryDate(1).toISOString()}`,
     "order_note": "Sample Order Note",
     "order_tags": {
         "name": "Developer",
