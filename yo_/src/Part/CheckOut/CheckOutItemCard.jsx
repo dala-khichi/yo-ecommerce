@@ -140,7 +140,7 @@ function getPercentageOf(discoun, total) {
     
     const payment = async ()=>{
       try {
-     await  doPayment()
+    //  await  doPayment()
         const res = await Yo.post("/api/site/orders",{
           couponCode:coupenData?.code,
             selectedAddressId,paymentType

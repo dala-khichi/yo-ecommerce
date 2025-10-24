@@ -25,36 +25,28 @@ class ShippingDetails {
     }
     
 
-    static async create({   order_id,
-  full_name,
-  phone_number,
-  alternare_phone,
-  address_line1,
-  address_line2,
-  city,
-  pincode,
-  address_type,
-  tracking_no,
-  estimated_delivery_date, }) {
-        const query = `INSERT INTO shipping_details (
-  order_id,
-  full_name,
-  phone_number,
-  alternare_phone,
-  address_line1,
-  address_line2,
-  city,
-  pincode,
-  address_type,
-  tracking_no,
-  estimated_delivery_date,
- 
-) VALUES (
-  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-);
-`;
+    static async create({  
+       order_id,
+  full_name='',
+  phone_number='',
+  alternare_phone="",
+  address_line1="",
+  address_line2="",
+  city='',
+  pincode="",
+  address_type="",
+  tracking_no="",
+  estimated_delivery_date='', }) {
+
+
+const query = `INSERT INTO shipping_details( order_id, full_name, phone_number, alternare_phone, address_line1, address_line2, city, pincode,
+ address_type, tracking_no,
+ estimated_delivery_date) VALUES
+
+ (? ,?, ?, ?, ?,  ?, ?, ?, ?, ?, ? )`
+
 const [result] = await db.execute(query, [
-  order_id,
+  order_id, 
   full_name,
   phone_number,
   alternare_phone,
@@ -66,6 +58,13 @@ const [result] = await db.execute(query, [
   tracking_no,
   estimated_delivery_date
 ]);
+
+
+
+
+
+
+
         return result.insertId;
     }
 

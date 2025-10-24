@@ -1,10 +1,10 @@
 const Order = require("../models/Order");
 const Cart = require("../models/Cart");
 const OrderItem = require("../models/orderItem");
-const ShippingDetail = require("../models/ShippingDetail");
+const ShippingDetails = require("../models/ShippingDetail");
 const Payment = require("../models/Payment");
 const Aaddresses = require("../models/Address");
-
+const { randomString, expiryDate } = require("../../utils/randomString");
 
 class OrderService {
     static async getAll(options) {
@@ -19,7 +19,7 @@ class OrderService {
         return await Order.getByIdForUpdate(id);
     }
 
-    static async create(data, userId) {
+    static async createv0(data, userId) {
         const { couponCode, selectedAddressId, paymentType } = data;
 
         try {
@@ -74,30 +74,31 @@ console.log(2)
 
 
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-            const payment_id = await Payment.create({
-                order_id: null,
-                order_amount: totalAmount,
-                order_currency: "INR",
-                payment_status: "PENDING",
-                payment_gateway_order_id: paymentOrderId, 
-                mata_data:""
-            });
+ const paymentOrderId = 2;
+            // const payment_id = await Payment.create({
+            //     order_id: "1",
+            //     order_amount: totalAmount || 1,
+            //     order_currency: "INR",
+            //     payment_status: "PENDING",
+            //     payment_gateway_order_id: paymentOrderId, 
+            //     mata_data:"{h:5555}"
+            // });
 
 
 console.log(3)
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            
 
-            const addressData = await Aaddresses.getById(selectedAddressId)
 
-            const shipping_id = await ShippingDetails.create({
-                order_id: null,
-                ...addressData,
-                tracking_no,
-                estimated_delivery_date: "2d"
-            });
+
+            // const addressData = await Aaddresses.getById(selectedAddressId)
+            // const shipping_id = await ShippingDetails.create({
+            //     order_id: 1,
+            //     ...addressData,
+            //     tracking_no:4,
+            //     estimated_delivery_date: "2d"
+            // });
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -105,11 +106,11 @@ console.log(4)
 
 
             const order_id = await Order.create({
-                user_id,
-                payment_id,
+                user_id:userId,
+                payment_id:3,
                 status: "PENDING",
                 payment_mode: "ONLINE",
-                shipping_id,
+                shipping_id:2,
                 total_amount: totalAmount
             });
 
@@ -130,6 +131,11 @@ console.log(5)
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+console.log(6)
+
 
             await Payment.update(payment_id, { order_id });
             await ShippingDetails.update(shipping_id, { order_id });
@@ -193,16 +199,49 @@ console.log(5)
         }
     }
 
-static async createv1(data, userId) {
+static async create(data, userId) {
     const { couponCode, selectedAddressId, paymentType } = data;
-
     try {
         const cartItems = await Cart.getAllbyUserId(userId);
         if (!cartItems || cartItems.length === 0) throw new Error('No items in cart to place order');
 
         const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
+    
         let payment_id, paymentOrderId, payment_session_id;
+
+           // Order creation
+        const order_id = await Order.create({
+            user_id: userId,
+            status: "PENDING",
+            payment_mode: paymentType,
+            total_amount: totalAmount
+        });
+
+
+   // Shipping details
+        const addressData = await Aaddresses.getById(selectedAddressId);
+        const shipping_id = await ShippingDetails.create({
+            order_id,
+            ...addressData,
+            tracking_no:randomString() ,
+            estimated_delivery_date: expiryDate(1)
+        });
+
+
+
+    for (const item of cartItems) {
+            await OrderItem.create({
+                order_id,
+                item_variant_id: item.item_variant_id,
+                item_variant_details: JSON.stringify(item),
+            });
+        }
+
+
+
+
+  
+
 
         if (paymentType === "ONLINE") {
             // ONLINE payment
@@ -241,50 +280,30 @@ static async createv1(data, userId) {
         } else {
             // COD payment
             payment_id = await Payment.create({
-                order_id: null,
+                order_id,
                 order_amount: totalAmount,
                 order_currency: "INR",
                 payment_status: "COD",
-                payment_gateway_order_id: null
+                payment_status: "PENDING",
+                payment_gateway_order_id: 2,
+                  mata_data:"{}"
             });
+            await Cart.clearUserCart(userId);
+            
         }
 
-        // Shipping details
-        const addressData = await Addresses.getById(selectedAddressId);
-        const shipping_id = await ShippingDetails.create({
-            order_id: null,
-            ...addressData,
-            tracking_no: generateTrackingNo(),
-            estimated_delivery_date: calculateEstimatedDeliveryDate()
-        });
+        
+     
+       
 
-        // Order creation
-        const order_id = await Order.create({
-            user_id: userId,
-            payment_id,
-            status: "PENDING",
-            payment_mode: paymentType,
-            shipping_id,
-            total_amount: totalAmount
-        });
-
-        // Order items
-        for (const item of cartItems) {
-            await OrderItem.create({
-                order_id,
-                item_variant_id: item.item_variant_id,
-                item_variant_details: JSON.stringify(item),
-                quantity: item.quantity,
-                price: item.price
-            });
-        }
-
+    
+        
+        
         // Update Payment & Shipping
-        await Payment.update(payment_id, { order_id });
-        await ShippingDetails.update(shipping_id, { order_id });
-
+        // await Payment.update(payment_id, { order_id });
+        // await ShippingDetails.update(shipping_id, { order_id });
+        
         // Optionally clear user cart
-        await Cart.clearUserCart(userId);
 
         return paymentType === "ONLINE" ? payment_session_id : "COD_ORDER_PLACED";
 

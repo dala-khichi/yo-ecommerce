@@ -24,18 +24,18 @@ class Order {
         return this.getById(id);
     }
 
-    static async create({ user_id, payment_id, status, payment_mode, shipping_id,total_amount }) {
-        const query = `INSERT INTO orders (user_id, payment_id, status, payment_mode, shipping_id,total_amount) 
-                       VALUES (?, ?, ?, ?, ?,?)`;
-        const [result] = await db.execute(query, [user_id, payment_id, status, payment_mode, shipping_id,total_amount]);
+    static async create({ user_id, status, payment_mode,total_amount }) {
+        const query = `INSERT INTO orders (user_id,status, payment_mode,total_amount) 
+                       VALUES (?, ?, ?, ? )`;
+        const [result] = await db.execute(query, [user_id,  status, payment_mode, total_amount]);
         console.log(result);
         return result.insertId;
     }
 
     static async update(id, { user_id, payment_id, status, payment_mode, shipping_id }) {
-        const query = `UPDATE orders SET user_id = ?, payment_id = ?, status = ?, payment_mode = ?, shipping_id = ? 
+        const query = `UPDATE orders SET user_id = ?, status = ?, payment_mode = ?
                        WHERE id = ?`;
-        const [result] = await db.execute(query, [user_id, payment_id, status, payment_mode, shipping_id, id]);
+        const [result] = await db.execute(query, [user_id, status, payment_mode,  id]);
         return result.affectedRows;
     }
 
