@@ -1,7 +1,36 @@
-import React from "react";
 import { CheckCircle, CircleDot, Package, Truck } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import Yo from "../../Part/Utility/Axios";
+import { useParams } from "react-router-dom"; 
+
 
 const TrackOrder = () => {
+
+
+const {id }   = useParams();
+ const getOrder = async(id)=>{
+      try {
+        const res =  await Yo.get("/api/site/orders/"+id);
+          setOrderData(res?.data|| {})
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+
+useEffect(()=>{
+
+getOrder(id)
+
+
+},[id])
+
+
+
+
+
+
+
   const orderSteps = [
     {
       title: "Order Confirmed",

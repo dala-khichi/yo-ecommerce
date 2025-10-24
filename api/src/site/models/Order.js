@@ -1,7 +1,7 @@
 const db = require("../../config/db");
 
 class Order {
-    static async getAll({ page = 1, limit = 10, sortBy = "created_at", order = "DESC" }) {
+    static async getAll({ page = 1, limit = 10, sortBy = "created_at", order = "DESC" },userId) {
         const offset = (page - 1) * limit;
         const validSortBy = ["created_at", "updated_at", "status"];
         const validOrder = ["ASC", "DESC"];
@@ -9,14 +9,19 @@ class Order {
         if (!validSortBy.includes(sortBy)) sortBy = "created_at";
         if (!validOrder.includes(order)) order = "DESC";
 
-        const query = `SELECT * FROM orders ORDER BY ${sortBy} ${order} LIMIT ? OFFSET ?`;
-        const [results] = await db.execute(query, [limit, offset]);
+        const query = `SELECT * FROM orders  WHERE user_id = ? ORDER BY ${sortBy} ${order} LIMIT ? OFFSET ?`;
+        const [results] = await db.execute(query, [userId,limit, offset]);
         return results;
     }
 
-    static async getById(id) {
-        const query = "SELECT * FROM orders WHERE id = ?";
-        const [results] = await db.execute(query, [id]);
+
+    
+
+
+
+    static async getById(id,userId) {
+        const query = "SELECT * FROM orders WHERE id = ? and user_id = ?";
+        const [results] = await db.execute(query, [id,userId]);
         return results.length ? results[0] : null;
     }
 
