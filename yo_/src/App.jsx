@@ -33,6 +33,7 @@ import TrackOrder from './Pages/MyAccount/TrackOrder'
 import ProtecRoute from './Part/Utility/ProtecRoute'
 import ItemDisplay from './TestComponent/Test2/ProductCard'
 import EditAddressForm from "./Pages/MyAccount/EditAddressForm";
+import OrderSuccess from "./Pages/ChackOut/OrderSuccess";
 
 
 
@@ -63,9 +64,13 @@ function App() {
           <Route path="item/:id" element={ <Item />} />
           <Route path="items" element={<Items />} />
           <Route path="check-out" element={<CheckOut />} />
-          <Route path="test" element={<ItemDisplay />} />
-
         </Route>
+
+          <Route path="/order-success" element={<OrderSuccess />} />
+
+
+
+
 
         {/* Auth Routes using AuthLayout */}
         <Route path="/auth" element={<AuthLayout />}>
