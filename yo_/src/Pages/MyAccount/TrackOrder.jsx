@@ -30,7 +30,7 @@ const TrackOrder = () => {
   ];
 
   return (
-    <div className="max-w-xl ani mx-auto p-4">
+    <div className="max-w-xl md:max-w-4xl md:flex md:gap-10 ani mx-auto p-4">
       <h2 className="text-xl font-semibold mb-4 text-center">Track Order</h2>
       <p className="text-sm text-gray-600 mb-6">Order #283947</p>
 
