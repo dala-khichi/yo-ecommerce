@@ -3,7 +3,7 @@ const { successResponse, errorResponse } = require("../../utils/response");
 
 exports.getAll = async (req, res) => {
     try {
-        const orders = await OrderService.getAll(req.query);
+        const orders = await OrderService.getAll(req.query,req?.user?.id);
         return successResponse(res, "Orders fetched successfully", orders);
     } catch (error) {
         return errorResponse(res, error.message);
@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const order = await OrderService.getById(req.params.id);
+        const order = await OrderService.getById(req.params.id,req.user.id);
         if (!order) return errorResponse(res, "Order not found", 404);
         return successResponse(res, "Order fetched successfully", order);
     } catch (error) {

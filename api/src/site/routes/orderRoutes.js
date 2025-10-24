@@ -3,8 +3,8 @@ const router = express.Router();
 const orderController = require("../controllers/orderController");
 const {userAuth} = require("../../middleware/authMiddleware");
 
-router.get("/", orderController.getAll);
-router.get("/:id", orderController.getById);
+router.get("/",userAuth, orderController.getAll);
+router.get("/:id",userAuth, orderController.getById);
 router.get("/update/:id", orderController.getByIdForUpdate);
 router.post("/",userAuth, orderController.create);
 router.put("/:id", orderController.update);

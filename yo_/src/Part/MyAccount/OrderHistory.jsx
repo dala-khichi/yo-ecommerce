@@ -1,12 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import img from "../../Image/Items/8f1847c9-3855-4dec-af78-e8105b026390_PACH+SHOT+VOLA+CIEL+ET+VISO+(8).jpeg";
 import {
   Link,
   Outlet
 } from "react-router-dom";
 
+import Yo from "../../Part/Utility/Axios";
+
+
+
 const OrderHistory = () => {
   const [activeTab, setActiveTab] = useState("All Orders");
+
+  const [orderData, setOrderData] = useState({});
+
+
+
+ const getOrder = async()=>{
+      try {
+        const res =  await Yo.get("/api/site/orders");
+          setOrderData(res?.data|| {})
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    
+
+useEffect(()=>{
+
+getOrder()
+
+
+},[])
+
+
 
   const tabs = ["All Orders", "Processing", "Shipped", "Delivered"];
   const orders = [
