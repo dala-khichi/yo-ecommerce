@@ -9,9 +9,9 @@ const OrderItem = {
 
   findAll: async(orderId) => {
     const sql = `SELECT * FROM order_items WHERE order_id  = ?`;
-    
-    const [results] = await db.execute(sql, [orderId]);
-        return results.length ? results[0] : null;
+    const [results] = await db.execute(sql, [orderId]);      
+    console.log(results) 
+        return results;
   },
 
   findById: (id) => {

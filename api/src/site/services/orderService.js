@@ -13,7 +13,19 @@ class OrderService {
   const result = await Promise.all(
     orderData.map(async (e) => {
       const items = await OrderItem.findAll(e.id);
-      return {...e, items };
+
+                 const detailsArr= items.map((a,b)=>{
+                    
+                    return JSON.parse(a.item_variant_details)
+
+                   })
+   
+                   
+
+     // console.log(items.item_variant_details)
+        // const itemDetails = JSON.parse(items); 
+
+      return {...e,items: detailsArr};
     })
   );
 
