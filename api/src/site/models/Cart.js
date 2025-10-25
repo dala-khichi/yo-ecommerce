@@ -34,9 +34,8 @@ WHERE c.user_id = ?`;
     
     
     static async getAllbyUserId(userId) {
-      
       //const query = "SELECT id,quantity,quantity,item_variant_id  FROM cart WHERE user_id = ?";
-       const query = "SELECT c.id,c.quantity,c.quantity,c.item_variant_id , iv.price FROM cart c JOIN item_variants  iv On  c.item_variant_id = iv.id  WHERE user_id = ?";
+       const query = "SELECT c.id,c.quantity,c.item_variant_id , iv.price FROM cart c JOIN item_variants  iv On  c.item_variant_id = iv.id  WHERE user_id = ?";
         const [results] = await db.execute(query, [userId]);
         return results.length ? results : null;
         //get simple data 
@@ -85,6 +84,9 @@ WHERE
         console.log(results);
         return results.length ? results : null;
     }
+    
+    
+    
     static async getAll(x,id) {
       
       const query = `SELECT 
@@ -120,9 +122,56 @@ WHERE
     c.user_id = ?`;
        // const query = "SELECT id FROM cart WHERE item_variant_id = ?";
         const [results] = await db.execute(query, [id]);
-        console.log(results);
+        
         return results.length ? results : null;
     }
+    
+    static async getAllForCardItem(userId) {
+      
+      const query = `SELECT 
+    ii.img,
+    i.name AS item_name,
+    co.color  AS color,
+    s.size  AS size,
+    c.quantity,
+    iv.price,
+    iv.id AS item_variant_id ,
+    c.id
+FROM 
+    cart c
+LEFT JOIN 
+    item_variants iv ON c.item_variant_id = iv.id
+LEFT JOIN 
+    items i ON iv.item_id = i.id
+LEFT JOIN 
+    colors co ON iv.color_id= co.id
+LEFT JOIN 
+    sizes s ON iv.size_id = s.id
+LEFT JOIN 
+    (SELECT 
+         item_id, 
+         MIN(id) AS min_img_id 
+     FROM 
+         item_images 
+     GROUP BY 
+         item_id
+    ) AS first_img ON first_img.item_id = i.id
+LEFT JOIN 
+    item_images ii ON ii.id = first_img.min_img_id
+WHERE 
+    c.user_id = ?`;
+       // const query = "SELECT id FROM cart WHERE item_variant_id = ?";
+        const [results] = await db.execute(query, [userId]);
+        
+        return results.length ? results : null;
+    }
+    
+    
+    
+    
+    
+    
+    
 
     static async getByIdForUpdate(id) {
         return this.getById(id);

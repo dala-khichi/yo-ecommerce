@@ -7,9 +7,18 @@ const Aaddresses = require("../models/Address");
 const { randomString, expiryDate } = require("../../utils/randomString");
 
 class OrderService {
-    static async getAll(options,userId) {
-        return await Order.getAll(options,userId);
-    }
+    static async getAll(options, userId) {
+  const orderData = await Order.getAll(options, userId);
+
+  const result = await Promise.all(
+    orderData.map(async (e) => {
+      const items = await OrderItem.findAll(e.id);
+      return {...e, items };
+    })
+  );
+
+  return result;
+}
 
     static async getById(id,userId) {
         return await Order.getById(id,userId);
@@ -24,8 +33,11 @@ class OrderService {
 static async create(data, userId) {
     const { couponCode, selectedAddressId, paymentType } = data;
     try {
-        const cartItems = await Cart.getAllbyUserId(userId);
+        const cartItems  = await Cart.getAllForCardItem(userId);
+        
+      /// const cartItems = await Cart.getAll(userId);
         if (!cartItems || cartItems.length === 0) throw new Error('No items in cart to place order');
+
 
         const totalAmount = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
@@ -97,7 +109,8 @@ static async create(data, userId) {
                 order_amount: totalAmount,
                 order_currency: "INR",
                 payment_status: "PENDING",
-                payment_gateway_order_id: paymentOrderId
+                payment_gateway_order_id: paymentOrderId,
+                mata_data:paymentData
             });
         } else {
             // COD payment
@@ -105,13 +118,18 @@ static async create(data, userId) {
                 order_id,
                 order_amount: totalAmount,
                 order_currency: "INR",
-                payment_status: "COD",
                 payment_status: "PENDING",
                 payment_gateway_order_id: 2,
                   mata_data:"{}"
             });
-            await Cart.clearUserCart(userId);
             
+            await Order.updateStatus(order_id, "PROCESSING")
+          
+            await Cart.clearUserCart(userId);
+          
+          
+          
+          
         }
 
         

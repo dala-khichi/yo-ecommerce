@@ -27,7 +27,7 @@ const CheckOut = () => {
     const [coupen, setCoupen] = useState(null);
     const [selectAddress, setSelectAddress] = useState({});
     const { selectedAddressId, setSelectedAddressId } = useUtility();
-    const [payment, setPayment] = useState(['upi',"cod"]);
+    const [payment, setPayment] = useState(['ONLINE',"COD"]);
     const [paymentSelected, setPaymentSelected] = useState("");
 
 

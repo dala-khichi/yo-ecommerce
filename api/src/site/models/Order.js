@@ -9,8 +9,9 @@ class Order {
         if (!validSortBy.includes(sortBy)) sortBy = "created_at";
         if (!validOrder.includes(order)) order = "DESC";
 
-        const query = `SELECT * FROM orders  WHERE user_id = ? ORDER BY ${sortBy} ${order} LIMIT ? OFFSET ?`;
+        const query = `SELECT * FROM orders  WHERE user_id = ? AND status != 'PENDING' ORDER BY ${sortBy} ${order} LIMIT ? OFFSET ?`;
         const [results] = await db.execute(query, [userId,limit, offset]);
+        
         return results;
     }
 
@@ -43,6 +44,14 @@ class Order {
         const [result] = await db.execute(query, [user_id, status, payment_mode,  id]);
         return result.affectedRows;
     }
+
+
+static async updateStatus(id, status) {
+    const query = `UPDATE orders SET status = ? WHERE id = ?`;
+    const [result] = await db.execute(query, [status, id]);
+    return result.affectedRows;
+}
+
 
 
 

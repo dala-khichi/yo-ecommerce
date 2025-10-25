@@ -1,17 +1,17 @@
 const db = require('../../config/db');
 
 const OrderItem = {
-  create: (data) => {
-       console.log(data)
-
-
+  create: async(data) => {
     const sql = `INSERT INTO order_items (order_id, item_variant_id,item_variant_details	) VALUES (?, ?, ?)`;
-    return db.query(sql, [data.order_id, data.item_variant_id,data.item_variant_details	]);
+    const [result] = await db.query(sql, [data.order_id, data.item_variant_id,data.item_variant_details	]);
+        return result.insertId;
   },
 
-  findAll: () => {
-    const sql = `SELECT * FROM order_items ORDER BY id DESC`;
-    return db.query(sql);
+  findAll: async(orderId) => {
+    const sql = `SELECT * FROM order_items WHERE order_id  = ?`;
+    
+    const [results] = await db.execute(sql, [orderId]);
+        return results.length ? results[0] : null;
   },
 
   findById: (id) => {
