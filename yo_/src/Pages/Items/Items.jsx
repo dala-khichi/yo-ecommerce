@@ -68,7 +68,7 @@ const Items = () => {
     
     
        <div  className="w-full px-5 h-20 relative z-20 bg-pink-300 bg-white ">
-    <Input label="Search Items " placeholder="search item" />
+    <Input label="Search Items " placeholder="search item"   />
     </div> 
     
        <div  className="w-full px-5 h-20 relative z-20 bg-pink-300 bg-white ">

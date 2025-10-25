@@ -59,7 +59,7 @@ const SubMenu = forwardRef(({
       <div className="flex jb" >
             <div onClick={closeButton} className="scale-[1.2] p-2 rounded-full  rotate-180">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M9 18l6-6-6-6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M9 18l6-6-6-6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
       </div>
       

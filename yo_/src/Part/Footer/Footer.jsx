@@ -10,7 +10,7 @@ const Footer = () => {
         Get exclusive updates on the collection's launch, personalized
         communication and the House's latest news.
       </p>
-      <h5 className="text-xs text-gray-500"> <sapn className="text-white">+</sapn> Subscribe</h5>
+      <h5 className="text-xs text-gray-500"> <span className="text-white">+</span> Subscribe</h5>
       
     </div>
     
