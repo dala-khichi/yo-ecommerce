@@ -91,6 +91,9 @@ export const UtilityProvider = ({ children }) => {
     window.addEventListener("resize", handleResize);
     handleResize(); // Call immediately to set initial values
 
+
+      
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 

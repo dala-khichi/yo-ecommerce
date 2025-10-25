@@ -5,10 +5,10 @@ import HeroCategoriesElement from "./HeroCategoriesElement"
 const HeroCategories = () => {
   return (
     <div className="w-full ">
-      <h1 className="text-2xl text-center"> Your Categories </h1>
+      <h1 className="text-2xl   text-center"> Your Categories </h1>
    
       
-      <div className="grid grid-cols-2 overflow-scroll gap-3 gap-y-5 py-10">
+      <div className="grid md:grid-cols-7 grid-cols-2 overflow-scroll gap-3 gap-y-5 py-10">
       
       
                 {

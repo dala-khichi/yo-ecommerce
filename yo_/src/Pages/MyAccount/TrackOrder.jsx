@@ -5,7 +5,10 @@ import { useParams } from "react-router-dom";
 
 
 const TrackOrder = () => {
-
+  
+   const [orderData, setOrderData] = useState([]);
+  
+    
 
 const {id }   = useParams();
  const getOrder = async(id)=>{
@@ -57,7 +60,6 @@ getOrder(id)
       completed: false,
     },
   ];
-
   return (
     <div className="max-w-xl md:max-w-4xl md:flex md:gap-10 ani mx-auto p-4">
       <h2 className="text-xl font-semibold mb-4 text-center">Track Order</h2>

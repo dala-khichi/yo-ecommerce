@@ -91,7 +91,7 @@ const Hero = () => {
         option1="Trending" 
         option2="Coming Soon" 
         spaceBetween={10} 
-        slidesPerView={1.2}
+        slidesPerView={isPhone?.isPhone?1.2:4.5}
         isLoading={loading.loading_trending}
       />
       <HeroPageWithTabs 
@@ -103,8 +103,8 @@ const Hero = () => {
         activeTab={activeTab2}
         imgClassName="!h-[35.1vh]" 
         infoClassName="text-sm" 
-        spaceBetween={5} 
-        slidesPerView={2.2}
+        spaceBetween={10} 
+         slidesPerView={ isPhone.isPhone?2.2:6.5}
         isLoading={loading.loading_x}
       />
       <HeroPageWithTabs 
@@ -113,8 +113,8 @@ const Hero = () => {
         option2="Coming Soon" 
         imgClassName="!h-[35.1vh]" 
         infoClassName="text-sm" 
-        spaceBetween={5} 
-        slidesPerView={2.2}
+        spaceBetween={10} 
+         slidesPerView={ isPhone.isPhone?2.2:6.5}
         isLoading={false}
       />
       <HeroPage_3 />
