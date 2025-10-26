@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userAuthController = require('../controllers/userAuthController');
-const {userAuth} = require('../middleware/authMiddleware.js');
+const {userAuth} = require('../../middleware/authMiddleware.js');
 
 
 ////frantend router 

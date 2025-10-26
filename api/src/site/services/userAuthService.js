@@ -1,9 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const detectEmailOrPhone = require('../utils/detectEmailOrPhone');
-const {log} = require('../utils/logger');
-const generateToken = require('../utils/generateToken');
-const {userGenerateToken} = require('../utils/jwtHelper');
+const detectEmailOrPhone = require('../../utils/detectEmailOrPhone');
+const {log} = require('../../utils/logger');
+const generateToken = require('../../utils/generateToken');
+const {userGenerateToken} = require('../../utils/jwtHelper');
 
 
 
@@ -37,8 +37,8 @@ const salt = await bcrypt.genSalt(10);
     user = await User.getByPhone(identifier);
   } else {
    // console.log("Invalid identifier type");
-   // throw new Error("Invalid identifier type");
-    return 6666;
+    throw new Error("Invalid identifier type");
+    return null;
     
   }
 
@@ -55,7 +55,7 @@ const salt = await bcrypt.genSalt(10);
     return null;
   }
      
-console.log(5555655555)
+
 
   return {
     token: userGenerateToken(user),

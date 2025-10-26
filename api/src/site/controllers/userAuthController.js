@@ -1,7 +1,7 @@
 const  userAuthService = require("../services/userAuthService");
 const  userService = require("../services/userService");
-const { successResponse, errorResponse } = require("../utils/response");
-const {userCookieName,isProduction} = require("../config/env");
+const { successResponse, errorResponse } = require("../../utils/response");
+const {userCookieName,isProduction} = require("../../config/env");
 
 
 
@@ -11,8 +11,6 @@ exports.loginUser = async (req, res) => {
          
     try {
          const data = await userAuthService.login(req.body);
-         console.log(data,5);
-         
         res.cookie(userCookieName, data.token, {
             path: '/',
             httpOnly: production, // Set to true in production
@@ -21,7 +19,7 @@ exports.loginUser = async (req, res) => {
 })
           successResponse(res, 'user login successfull', data.user );
     } catch (err) {
-      console.log(err)
+      
         errorResponse(res, err.message);
         
     }

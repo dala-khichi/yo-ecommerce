@@ -9,7 +9,7 @@ const {adminAuth} = require('./middleware/authMiddleware');
 const index = require("./routes/index")
 const site = require("./site/routes/index")
 const adminAuthRoutes = require("./routes/adminAuthRoutes");
-const userAuthRoutes = require("./routes/userAuthRoutes");
+const userAuthRoutes = require("./site/routes/userAuthRoutes");
 
 
 const test = require("./Test")

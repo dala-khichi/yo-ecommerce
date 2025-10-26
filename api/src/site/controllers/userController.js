@@ -1,6 +1,6 @@
 const userService = require('../services/userService');
-const { successResponse, errorResponse } = require('../utils/response');
-const {userCookieName,isProduction} = require("../config/env");
+const { successResponse, errorResponse } = require('../../utils/response');
+const {userCookieName,isProduction} = require("../../config/env");
 
 const getAllUsers = async (req, res) => {
     try {

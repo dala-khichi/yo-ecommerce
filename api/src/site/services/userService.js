@@ -1,8 +1,8 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const detectEmailOrPhone = require('../utils/detectEmailOrPhone');
-const {log} = require('../utils/logger');
-const generateToken = require('../utils/generateToken');
+const detectEmailOrPhone = require('../../utils/detectEmailOrPhone');
+const {log} = require('../../utils/logger');
+const generateToken = require('../../utils/generateToken');
 
 
 const getAllUsers = async (query) => {
